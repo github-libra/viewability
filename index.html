@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>just random site</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<style type="text/css">
+body {
+    width: 3000px;
+    height: 3000px;
+}
+
+
+.table-view {
+    padding: 0
+}
+
+.table-view .table-view-item {
+    padding: 1em 1em 1em 20px;
+    position: relative
+}
+
+.table-view .table-view-item:after,
+.table-view .table-view-item:before {
+    content: " ";
+    display: table
+}
+
+.table-view .table-view-item:after {
+    clear: both
+}
+
+.table-view .table-view-item .current {
+    -webkit-transform: translateY(40px) scale(5);
+    -ms-transform: translateY(40px) scale(5);
+    transform: translateY(40px) scale(5);
+    -webkit-transition: -webkit-transform .5s linear;
+    transition: -webkit-transform .5s linear;
+    transition: transform .5s linear;
+    transition: transform .5s linear, -webkit-transform .5s linear
+}
+
+.table-view .table-view-item .current.active {
+    -webkit-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+    -webkit-animation: flash 1s .5s infinite;
+    animation: flash 1s .5s infinite
+}
+
+.table-view .table-view-item .buy-container {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 140px;
+    height: 48px;
+    overflow: hidden
+}
+
+.table-view .table-view-item .buy-container a.buy {
+    position: absolute;
+    right: -106px;
+    bottom: 0;
+    width: 106px;
+    height: 36px;
+    line-height: 36px;
+    padding-left: 10px;
+    border-radius: 6px 0 0;
+    background-color: #ee3a50;
+    color: #fff;
+    font-size: 14px
+}
+
+.table-view .table-view-item .buy-container a.buy:hover {
+    text-decoration: none
+}
+
+.table-view .table-view-item .buy-container a.buy i {
+    position: relative;
+    top: 3px;
+    left: 10px;
+    font-size: 18px
+}
+
+.table-view .table-view-item:hover .feedback-dislike {
+    display: block
+}
+
+.table-view .table-view-block,
+.table-view .table-view-body,
+.table-view .table-view-cap {
+    float: left;
+    width: 60%;
+    color: #999
+}
+
+.table-view .table-view-body {
+    font-size: 16px;
+    color: #333;
+    font-weight: 700
+}
+
+.table-view .table-view-body>a {
+    vertical-align: middle;
+    margin-right: .2em
+}
+
+.table-view .table-view-body>a.ad-title:visited {
+    color: #666
+}
+
+.table-view .table-view-body>a.ad-title .keyword {
+    color: #f46
+}
+
+.table-view .table-view-cap {
+    width: 8%
+}
+
+.table-view .table-view-block {
+    width: 16%
+}
+
+.table-view>li:nth-child(even) {
+    background: #fcfcfc
+}
+
+.table-view .highlight {
+    color: #f46;
+    font-weight: 700
+}
+
+.table-view .window-item {
+    margin-top: 2.5em
+}
+.ad {
+    height: 100px;
+    border: 1px solid;
+    position: relative;
+    margin-bottom: 5px;
+}
+
+.ad:after {
+    background-color: green;
+    color: green;
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 3px;
+    height: 3px;
+    line-height: 3px;
+}
+
+.ad.inview {
+    background-color: tomato !important;
+}
+
+.ad.good {
+    background-color: green !important;
+}
+
+</style>
+
+<body class="view-table">
+    <div class="container">
+        <div id="all-list" class="section">
+            <ul style="border-top: 1px solid #eee;" class="table-view">
+                <li class="clearfix table-adsense-item table-view-item adsense">
+                    <a target="_blank" href="http://www.baidu.com/cpro.php?0s0000jxNWOcZvXDRu-_BFqcMn2qZ8V_8nJBmrq8dhKa1mhYqBUGyl1lpOj-4FCi-ASAm_oZnZOYq6ML7uvKQKU4TSAxW7wBmbighiQ8BwUSmaEkxUp4lDHKHzir.DR_iwRUO24nIHnNIBccJPtZxDkxIspTTQDRrxQG9lqEKBmls1FuC5S9QAHGvU8z1_LqMgZwmEuxY51cm_vyU8ji_HZAz1FvyUPMQgb4mTTzs1f_TUPLZTC0.IgF_5y9YIZ0lQzq1pA78uv99pi4Bmy-3py4MQhPEUiqWpAN_py78uztOIh--I1dYmyF_uiu9uhtqNvdC0ZwV5HD1nWTvnWc0IZRqn0KYujYs0ZI_5HD0mv4YUWY1nj0zPj03r7tkn-qWTZc0mv9VujYk0ZPWpAdb5HD0TL0qnHb0ug9Y5H00mywWUA71T1Ys0ZPbpdqv5H00ULnqrfKBTWYkn6KLpywYpjYs0A9-pyICIjYs0ZIG5HD0XA-s5fK1uykh5H00TvwogLu-TMPGUv3q0A49TLws5H00TMnqn0KWuWYs0APYUHdBmy-bIRw7wb-rwfK8mgwd5Hb0pgwGujYs0A-Ypy4hUv-b5H00uLKGujYs0ZF-uMKGujYs0APsThqGujY4Pbfkf1N7PWn3rDNKPbwjfRRYwbFjnjKAPW-DrDPaP6KWUvdsUARqPfK9u7q15H64m1RvPjR4rHbYPvm3rjR0UA7_5fK9IA-b5fK9IZw45fKLTLFW5H00myNxIA7z5fKGTdqoIADq0ZP_TLFW5H00TvkWp1Ys0ZP_pv-b5H00mMNbuvNYgvN3TA-b5H00my-s5RViPjNxrA9ZXh_v0ZNGTjdYHWuaTd9xT7P3msKWpjYz0Zw9TWYz0AwYTjYk0ZP-UAk-T-qGujYk0A-1gv7sTjYs0A7sT7qGujYs0APdTLfq0A-1gLIGThN_ugP15H00Iv7sgLw4TARqn0KsUjYs0AdW5yDdPWRzrjcd0Adv5Hn0UMus5H08nj0snj0snj00u1bqn0KhpgF1I7qzuyIGUv3qn6K1uyPEUhwxThNMpyq85H61P0K1TL0qnfK1TL0z5HD0IZws5HD0uA-1IZ0qnH0snfK9mWYs0A7bXjYs0ZKhIZF9uARqnHn0TZPYTh7buHYkn1010ZKGujYs0ZIspyfqn0K9uZw4TARqn0K1pgF-Uhw-TWYs0APYp1Y0TLIGujYs0ZPYXgK-5H00mLFW5HDsnjbL0r" data-act_type="listing-insert" data-hintword="" data-keyword="易车网" data-billing_name="30024088_12_cpr" data-index="1">
+                        <span class="table-view-body">
+    				法式烘焙加盟 小本创业首选
+    			</span>
+                        <div class="table-view-block">020新模式,上市公司品牌生意火爆,月赚10万! 小本创业首选项目,全程指导,轻</div>
+                        <div class="table-view-cap">赞助商链接</div>
+                    </a>
+                </li>
+                <li data-aid="1006989044" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1006989044.html" target="_blank" class="ad-title">大众 朗逸 2011款 1.6 手动 品雅版</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">2.8万元</span></div>
+                    <div class="table-view-block">大众 2012年09月 ...</div>
+                    <div class="table-view-cap">南汇</div>
+                    <div class="table-view-cap">今天 15:04</div>
+                </li>
+                <li data-aid="1002389851" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1002389851.html" target="_blank" class="ad-title">丰田 凯美瑞 2013款 2.5 手自一...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">4.2万元</span></div>
+                    <div class="table-view-block">丰田 2013年08月 ...</div>
+                    <div class="table-view-cap">浦东新区</div>
+                    <div class="table-view-cap">今天 15:04</div>
+                </li>
+                <li data-aid="1001249948" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1001249948.html" target="_blank" class="ad-title">大众 速腾 2014款 1.6 手自一体...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">5.58万元</span></div>
+                    <div class="table-view-block">大众 2014年09月 ...</div>
+                    <div class="table-view-cap">青浦</div>
+                    <div class="table-view-cap">今天 15:04</div>
+                </li>
+                <li data-aid="797154296" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a797154296.html" target="_blank" class="ad-title">现代 名驭 2009款 1.8 手动 G...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">1.8万元</span></div>
+                    <div class="table-view-block">现代 2010年11月 ...</div>
+                    <div class="table-view-cap">普陀</div>
+                    <div class="table-view-cap">今天 15:04</div>
+                </li>
+                <li data-aid="822002372" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/cheliangqiugou/a822002372.html" target="_blank" class="ad-title">收购上海牌照拦板、厢式、半挂大货车、</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/cheliangqiugou/" target="_blank" class="tag tag-category">高价收车</a></div>
+                    <div class="table-view-cap"><span class="highlight">　</span></div>
+                    <div class="table-view-block">　</div>
+                    <div class="table-view-cap">宝山</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="965303378" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a965303378.html" target="_blank" class="ad-title">比亚迪F3 2006款 1.6 手动 G...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">1.08万元</span></div>
+                    <div class="table-view-block">比亚迪 2006年03月...</div>
+                    <div class="table-view-cap">奉贤</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="1022092215" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1022092215.html" target="_blank" class="ad-title">别克 君威 2015款 1.6T 手自一...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-2"></a>
+                        <a data-toggle="tooltip" data-placement="top" data-original-title="认证车商" class="tag tag-verify"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">14.88万元</span></div>
+                    <div class="table-view-block">别克 2015年11月 ...</div>
+                    <div class="table-view-cap">嘉定</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li class="clearfix table-adsense-item table-view-item adsense">
+                    <a target="_blank" href="http://www.baidu.com/cpro.php?0s0000jOxkUSV0BKRKbBDMw8ESvFuD84KG0qTUIX7GKDNaRBLOjBxEE7n8gUymdakKrsAk6KwI5XVV3beCQKonO6VU_wT9dIm5ediwxkaoWKQpnngm_U1_-Esg5N.DD_igYXWz8X17wxv4RfgYXW57jKLmE83PrxB_HZAz1FvyUPMQgb4mTTzs1f_U85ZxER.IgF_5y9YIZ0lQzq1pA78uv99pi4Bmy-3py4MQhPEUiqWpAN_py78uztOIh--I1dYmyF_uiu9uhtqNvdC0ZwV5HD1nWTvnWc0IZRqn0KYujYs0ZI_5HD0mv4YUWY1nj0zPj03r7tkn-qWTZc0mv9VujYk0ZPWpAdb5HD0TL0qnHT0ug9Y5H00mywWUA71T1Ys0ZPbpdqv5H00ULnqrfKBTWYkn6KLpywYpjYs0A9-pyICIjYs0ZIG5HD0XA-s5fK1uykh5H00TvwogLu-TMPGUv3q0A49TLws5H00TMnqn0KWuWYs0APYUHdBmy-bIRw7wb-rwfK8mgwd5Hb0pgwGujYs0A-Ypy4hUv-b5H00uLKGujYs0ZF-uMKGujYs0APsThqGujY4Pbfkf1N7PWn3rDNKPbwjfRRYwbFjnjKAPW-DrDPaP6KWUvdsUARqPfK9u7q15H64m1RvPjR4rHbYPvm3rjR0UA7_5fK9IA-b5fK9IZw45fKLTLFW5H00myNxIA7z5fKGTdqoIADq0ZP_TLFW5H00TvkWp1Ys0ZP_pv-b5H00mMNbuvNYgvN3TA-b5H00my-s5RViPjNxrA9ZXh_v0ZNGTjdYHWuaTd9xT7P3msKWpjYz0Zw9TWYz0AwYTjYk0ZP-UAk-T-qGujYk0A-1gv7sTjYs0A7sT7qGujYs0APdTLfq0A-1gLIGThN_ugP15H00Iv7sgLw4TARqn0KsUjYs0AdW5HbYP1wbnHbk0Adv5HD0UMus5H08nj0snj0snj00u1bqn0KhpgF1I7qzuyIGUv3qn6K1uyPEUhwxThNMpyq85H61P0K1TL0qnfK1TL0z5HD0IZws5HD0uA-1IZ0qnH0snfK9mWYs0A7bXjYs0ZKhIZF9uARqnHn0TZPYTh7buHYkn1010ZKGujYs0ZIspyfqn0K9uZw4TARqn0K1pgF-Uhw-TWYs0APYp1Y0TLIGujYs0ZPYXgK-5H00mLFW5HczPjfs0r" data-act_type="listing-insert" data-hintword="" data-keyword="易车网" data-billing_name="30024088_12_cpr" data-index="2">
+                        <span class="table-view-body">
+    				奶茶店加盟 小本创业首选
+    			</span>
+                        <div class="table-view-block">免费加盟奶茶店,生意火爆,月赚10万! 小本创业首选项目,全程指导,轻松开店赚钱</div>
+                        <div class="table-view-cap">赞助商链接</div>
+                    </a>
+                </li>
+                <li data-aid="1019906118" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/daikuangouche/a1019906118.html" target="_blank" class="ad-title">0首付0利息，北京现代新朗动购车即享万元...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-3"></a>
+                        <a data-toggle="tooltip" data-placement="top" data-original-title="认证车商" class="tag tag-verify"></a><a href="http://shanghai.baixing.com/daikuangouche/" target="_blank" class="tag tag-category">贷款购车</a></div>
+                    <div class="table-view-cap"><span class="highlight">6万元</span></div>
+                    <div class="table-view-block">北京 </div>
+                    <div class="table-view-cap">南汇</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="997973990" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a997973990.html" target="_blank" class="ad-title">起亚K5 2012款 2.0 手自一体 ...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">3.3万元</span></div>
+                    <div class="table-view-block">起亚 2012年10月 ...</div>
+                    <div class="table-view-cap">青浦</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="986556521" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/daikuangouche/a986556521.html" target="_blank" class="ad-title">15年起亚K2/首付2.9万，当天提车</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/daikuangouche/" target="_blank" class="tag tag-category">贷款购车</a></div>
+                    <div class="table-view-cap"><span class="highlight">3万元</span></div>
+                    <div class="table-view-block">起亚 2015年10月 ...</div>
+                    <div class="table-view-cap">浦东新区</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="974739884" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a974739884.html" target="_blank" class="ad-title">现代Coupe [酷派](进口) 200...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-2"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">2.31万元</span></div>
+                    <div class="table-view-block">现代 2006年04月 ...</div>
+                    <div class="table-view-cap">嘉定</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="1001168559" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1001168559.html" target="_blank" class="ad-title">陆风 X7 请致电：15900814406</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">2.88万元</span></div>
+                    <div class="table-view-block">其他 2016年04月 ...</div>
+                    <div class="table-view-cap">徐汇</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="879498353" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershougongchengche/a879498353.html" target="_blank" class="ad-title">【国5】江淮格尔发全系 首付5万上路</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-2"></a>
+                        <a data-toggle="tooltip" data-placement="top" data-original-title="认证车商" class="tag tag-verify"></a><a href="http://shanghai.baixing.com/ershougongchengche/" target="_blank" class="tag tag-category">二手货车</a></div>
+                    <div class="table-view-cap"><span class="highlight">5万元</span></div>
+                    <div class="table-view-block">厢式货车 江淮 </div>
+                    <div class="table-view-cap">闵行</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="832163606" data-cpm-sign="" data-inorganic="1" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a832163606.html" target="_blank" class="ad-title">福瑞迪三厢 2011款 全国提档 买车送油卡</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-2"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">1.3万元</span></div>
+                    <div class="table-view-block">起亚 5.00万公里 福...</div>
+                    <div class="table-view-cap">嘉定</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li class="clearfix table-adsense-item table-view-item adsense">
+                    <a target="_blank" href="http://www.baidu.com/cpro.php?0s00000n9Io3GqXCe97yyqEtAu0BK8WlkVTbqaQcwAPFMc3h81bLKnNedqO7ESaZOBUokoV-mjDcEsp1yKEL0FyYZ7P76Z2r2Ayczs0WQs28_75BPLRwLK-qjpag.DD_iwdXO-fHI64cc323rOtH_E14n-az1_yFWWuubeQPh1-ozT_rrumuCy2Sr1_e7.IgF_5y9YIZ0lQzq1pA78uv99pi4Bmy-3py4MQhPEUiqWpAN_py78uztOIh--I1dYmyF_uiu9uhtqNvdC0ZwV5HD1nWTvnWc0IZRqn0KYujYs0ZI_5HD0mv4YUWY1nj0zPj03r7tkn-qWTZc0mv9VujYk0ZPWpAdb5HD0TL0qn1b0ug9Y5H00mywWUA71T1Ys0ZPbpdqv5H00ULnqrfKBTWYkn6KLpywYpjYs0A9-pyICIjYs0ZIG5HD0XA-s5fK1uykh5H00TvwogLu-TMPGUv3q0A49TLws5H00TMnqn0KWuWYs0APYUHdBmy-bIRw7wb-rwfK8mgwd5Hb0pgwGujYs0A-Ypy4hUv-b5H00uLKGujYs0ZF-uMKGujYs0APsThqGujY4Pbfkf1N7PWn3rDNKPbwjfRRYwbFjnjKAPW-DrDPaP6KWUvdsUARqPfK9u7q15H64m1RvPjR4rHbYPvm3rjR0UA7_5fK9IA-b5fK9IZw45fKLTLFW5H00myNxIA7z5fKGTdqoIADq0ZP_TLFW5H00TvkWp1Ys0ZP_pv-b5H00mMNbuvNYgvN3TA-b5H00my-s5RViPjNxrA9ZXh_v0ZNGTjdYHWuaTd9xT7P3msKWpjYz0Zw9TWYz0AwYTjYk0ZP-UAk-T-qGujYk0A-1gv7sTjYs0A7sT7qGujYs0APdTLfq0A-1gLIGThN_ugP15H00Iv7sgLw4TARqn0KsUjYs0AdW5yDYmWm4n1Rv0Adv5Hc0UMus5H08nj0snj0snj00u1bqn0KhpgF1I7qzuyIGUv3qn6K1uyPEUhwxThNMpyq85H61P0K1TL0qnfK1TL0z5HD0IZws5HD0uA-1IZ0qnH0snfK9mWYs0A7bXjYs0ZKhIZF9uARqnHn0TZPYTh7buHYkn1010ZKGujYs0ZIspyfqn0K9uZw4TARqn0K1pgF-Uhw-TWYs0APYp1Y0TLIGujYs0ZPYXgK-5H00mLFW5HDsPWnz0r" data-act_type="listing-insert" data-hintword="" data-keyword="易车网" data-billing_name="30024088_12_cpr" data-index="3">
+                        <span class="table-view-body">
+    				7000 急招IT实习生 岗前实训
+    			</span>
+                        <div class="table-view-block">起薪7000 合作名企IT急招 技术岗前实训 五险一金 提供住宿</div>
+                        <div class="table-view-cap">赞助商链接</div>
+                    </a>
+                </li>
+                <li data-aid="946336194" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a946336194.html" target="_blank" class="ad-title">11年铃木天语私家车急售</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">5万元</span></div>
+                    <div class="table-view-block">铃木 5万公里 天语 </div>
+                    <div class="table-view-cap">　</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="677976188" data-cpm-sign="" data-inorganic="1" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershoukache/a677976188.html" target="_blank" class="ad-title">08年47座，申龙客车，玉柴单位一手车</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-2"></a><a href="http://shanghai.baixing.com/ershoukache/" target="_blank" class="tag tag-category">面包车/客车</a></div>
+                    <div class="table-view-cap"><span class="highlight">7.8万元</span></div>
+                    <div class="table-view-block">其他 2008年 20万...</div>
+                    <div class="table-view-cap">杨浦</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="1015177207" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1015177207.html" target="_blank" class="ad-title">现代ix35 2013款 2.0 手自一...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">2.88万元</span></div>
+                    <div class="table-view-block">现代 2013年09月 ...</div>
+                    <div class="table-view-cap">青浦</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="459900352" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/cheliangqiugou/a459900352.html" target="_blank" class="ad-title">专业回收各种报废车15801812793</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/cheliangqiugou/" target="_blank" class="tag tag-category">高价收车</a></div>
+                    <div class="table-view-cap"><span class="highlight">　</span></div>
+                    <div class="table-view-block">　</div>
+                    <div class="table-view-cap">嘉定</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="1017923589" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1017923589.html" target="_blank" class="ad-title">现代 伊兰特 2012款 伊兰特 朗动 ...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">2万元</span></div>
+                    <div class="table-view-block">现代 2012年04月 ...</div>
+                    <div class="table-view-cap">普陀</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="876218896" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/daikuangouche/a876218896.html" target="_blank" class="ad-title">快乐买车车为购车族提供专业的购车服务</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/daikuangouche/" target="_blank" class="tag tag-category">贷款购车</a></div>
+                    <div class="table-view-cap"><span class="highlight">6.58万元</span></div>
+                    <div class="table-view-block">力帆 力帆720 </div>
+                    <div class="table-view-cap">金山</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="1023542341" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1023542341.html" target="_blank" class="ad-title">雪佛兰 科鲁兹 2012款 1.6 手自...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">1.88万元</span></div>
+                    <div class="table-view-block">雪佛兰 2012年07月...</div>
+                    <div class="table-view-cap">松江</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li class="clearfix table-adsense-item table-view-item adsense">
+                    <a target="_blank" href="http://www.baidu.com/cpro.php?0s0000jjdNIyLpYnfd3zKK3xFouvB7G4N8Z_uAAU7fOhtoePsk581XOL-IMwcMxPMzOi3kKcd1wGvR5nyKzetGaTiwsawadRX_2435M9hHBxrG5t0tNHT8vh167x.7R_a9nOA1Iqj3LHTbZxikgYqrHxdWsmvg_uPvOuu3SreGlk3nUrGWIg_vUQr1oZ6kYnU7My5KWklyQvgqjtzr_XjZvtjaknTUQnMuu_vTVXH-9k1QjPak8_lIz6.IgF_5y9YIZ0lQzq1pA78uv99pi4Bmy-3py4MQhPEUiqWpAN_py78uztOIh--I1dYmyF_uiu9uhtqNvdC0ZwV5HD1nWTvnWc0IZRqn0KYujYs0ZI_5HD0mv4YUWY1nj0zPj03r7tkn-qWTZc0mv9VujYk0ZPWpAdb5HD0TL0qnHT0ug9Y5H00mywWUA71T1Ys0ZPbpdqv5H00ULnqrfKBTWYkn6KLpywYpjYs0A9-pyICIjYs0ZIG5HD0XA-s5fK1uykh5H00TvwogLu-TMPGUv3q0A49TLws5H00TMnqn0KWuWYs0APYUHdBmy-bIRw7wb-rwfK8mgwd5Hb0pgwGujYs0A-Ypy4hUv-b5H00uLKGujYs0ZF-uMKGujYs0APsThqGujY4Pbfkf1N7PWn3rDNKPbwjfRRYwbFjnjKAPW-DrDPaP6KWUvdsUARqPfK9u7q15H64m1RvPjR4rHbYPvm3rjR0UA7_5fK9IA-b5fK9IZw45fKLTLFW5H00myNxIA7z5fKGTdqoIADq0ZP_TLFW5H00TvkWp1Ys0ZP_pv-b5H00mMNbuvNYgvN3TA-b5H00my-s5RViPjNxrA9ZXh_v0ZNGTjdYHWuaTd9xT7P3msKWpjYz0Zw9TWYz0AwYTjYk0ZP-UAk-T-qGujYk0A-1gv7sTjYs0A7sT7qGujYs0APdTLfq0A-1gLIGThN_ugP15H00Iv7sgLw4TARqn0KsUjYs0AdW5yDknWwWmhRL0Adv5HD0UMus5H08nj0snj0snj00u1bqnfKhpgF1I7qzuyIGUv3qn6K1uyPEUhwxThNMpyq85H61P0K1TL0qnfK1TL0z5HD0IZws5HD0uA-1IZ0qnH0snfK9mWYs0A7bXjYs0ZKhIZF9uARqnHn0TZPYTh7buHYkn1010ZKGujYs0ZIspyfqn0K9uZw4TARqn0K1pgF-Uhw-TWYs0APYp1Y0TLIGujYs0ZPYXgK-5H00mLFW5HcLPWT30r" data-act_type="listing-insert" data-hintword="" data-keyword="易车网" data-billing_name="30024088_12_cpr" data-index="4">
+                        <span class="table-view-body">
+    				看旅游点评，出国自由行更安心
+    			</span>
+                        <div class="table-view-block">TripAdvisor猫途鹰,为您提供全球旅行者的 旅游点评。让出国旅游吃 喝 </div>
+                        <div class="table-view-cap">赞助商链接</div>
+                    </a>
+                </li>
+                <li data-aid="990223591" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a990223591.html" target="_blank" class="ad-title">吉利 帝豪 2014款 帝豪-两厢 1....</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">2.18万元</span></div>
+                    <div class="table-view-block">吉利 2014年06月 ...</div>
+                    <div class="table-view-cap">普陀</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="1001705365" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1001705365.html" target="_blank" class="ad-title">大众 朗逸 2013款 1.6 手自一体...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">4.2万元</span></div>
+                    <div class="table-view-block">大众 2013年10月 ...</div>
+                    <div class="table-view-cap">普陀</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="983345025" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a983345025.html" target="_blank" class="ad-title">大众 帕萨特 2005款 帕萨特 领驭 ...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">3.6万元</span></div>
+                    <div class="table-view-block">大众 2005年08月 ...</div>
+                    <div class="table-view-cap">嘉定</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="1004582334" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1004582334.html" target="_blank" class="ad-title">本田 雅阁 2014款 第九代雅阁 2....</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">6.8万元</span></div>
+                    <div class="table-view-block">本田 2014年05月 ...</div>
+                    <div class="table-view-cap">普陀</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="992680295" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a992680295.html" target="_blank" class="ad-title">大众 朗逸 2011款 2.0 手自一体...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">7.5万元</span></div>
+                    <div class="table-view-block">大众 2013年03月 ...</div>
+                    <div class="table-view-cap">闸北</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="1027923765" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1027923765.html" target="_blank" class="ad-title">起亚K5 2012款 2.0 手自一体 ...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">5.2万元</span></div>
+                    <div class="table-view-block">起亚 2012年06月 ...</div>
+                    <div class="table-view-cap">嘉定</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="1011655002" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1011655002.html" target="_blank" class="ad-title">大众 途安 2011款 1.4TSI 双...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">2.68万元</span></div>
+                    <div class="table-view-block">大众 2011年03月 ...</div>
+                    <div class="table-view-cap">松江</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="1028432106" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1028432106.html" target="_blank" class="ad-title">现代 索纳塔 2015款 第九代索纳塔 ...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">3.18万元</span></div>
+                    <div class="table-view-block">现代 2015年04月 ...</div>
+                    <div class="table-view-cap">青浦</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="1020430639" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1020430639.html" target="_blank" class="ad-title">大众 帕萨特 2011款 1.8TSI ...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">2.68万元</span></div>
+                    <div class="table-view-block">大众 2011年07月 ...</div>
+                    <div class="table-view-cap">普陀</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="1020014720" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1020014720.html" target="_blank" class="ad-title">大众 帕萨特 2011款 1.8TSI ...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">2.88万元</span></div>
+                    <div class="table-view-block">大众 2011年06月 ...</div>
+                    <div class="table-view-cap">普陀</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="1017902943" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1017902943.html" target="_blank" class="ad-title">陆风X7 2015款 2.0T 手自一体...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">2.68万元</span></div>
+                    <div class="table-view-block">陆风 2015年02月 ...</div>
+                    <div class="table-view-cap">青浦</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="1011681186" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1011681186.html" target="_blank" class="ad-title">起亚K5 2012款 2.0 手自一体 ...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">2万元</span></div>
+                    <div class="table-view-block">起亚 2012年03月 ...</div>
+                    <div class="table-view-cap">普陀</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="1011667361" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1011667361.html" target="_blank" class="ad-title">雪佛兰 科鲁兹 2013款 1.6 手动...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">2万元</span></div>
+                    <div class="table-view-block">雪佛兰 2013年04月...</div>
+                    <div class="table-view-cap">松江</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="1005388858" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1005388858.html" target="_blank" class="ad-title">大众 途观 2015款 1.8TSI 手...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">5.28万元</span></div>
+                    <div class="table-view-block">大众 2015年09月 ...</div>
+                    <div class="table-view-cap">上海周边</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="883730948" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a883730948.html" target="_blank" class="ad-title">12款K5,12年上牌，豪华一手车，国四...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">3.2万元</span></div>
+                    <div class="table-view-block">起亚 2012年10月 ...</div>
+                    <div class="table-view-cap">嘉定</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="983111142" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a983111142.html" target="_blank" class="ad-title">本田 雅阁 2009款 第八代雅阁 2....</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">4.2万元</span></div>
+                    <div class="table-view-block">本田 2009年10月 ...</div>
+                    <div class="table-view-cap">嘉定</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="982342085" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/daikuangouche/a982342085.html" target="_blank" class="ad-title">雪铁龙新上市C4世嘉，首付1.8万即可提...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/daikuangouche/" target="_blank" class="tag tag-category">贷款购车</a></div>
+                    <div class="table-view-cap"><span class="highlight">1.8万元</span></div>
+                    <div class="table-view-block">丰田 2015年04月 ...</div>
+                    <div class="table-view-cap">闵行</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="1017680496" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1017680496.html" target="_blank" class="ad-title">雪佛兰 科鲁兹 2013款 1.6 手自...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">2.8万元</span></div>
+                    <div class="table-view-block">雪佛兰 2013年05月...</div>
+                    <div class="table-view-cap">青浦</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="1002339213" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1002339213.html" target="_blank" class="ad-title">丰田 凯美瑞 2013款 2.5 手自一...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">4.2万元</span></div>
+                    <div class="table-view-block">丰田 2013年10月 ...</div>
+                    <div class="table-view-cap">嘉定</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="1023831055" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1023831055.html" target="_blank" class="ad-title">丰田 凯美瑞 2012款 2.0 手自一...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">3.68万元</span></div>
+                    <div class="table-view-block">丰田 2012年11月 ...</div>
+                    <div class="table-view-cap">青浦</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="1023830133" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1023830133.html" target="_blank" class="ad-title">现代ix35 2013款 2.0 手自一...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">2.68万元</span></div>
+                    <div class="table-view-block">现代 2013年10月 ...</div>
+                    <div class="table-view-cap">青浦</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="982880904" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a982880904.html" target="_blank" class="ad-title">别克 君威 2005款 2.5 自动 G...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">1.5万元</span></div>
+                    <div class="table-view-block">别克 2005年09月 ...</div>
+                    <div class="table-view-cap">闵行</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="1018259605" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1018259605.html" target="_blank" class="ad-title">大众 途观 2015款 1.8TSI 手...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">5.1万元</span></div>
+                    <div class="table-view-block">大众 2015年05月 ...</div>
+                    <div class="table-view-cap">普陀</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="1016120406" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1016120406.html" target="_blank" class="ad-title">宝骏730 2016款 1.5 手动 舒...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">3.8万元</span></div>
+                    <div class="table-view-block">宝骏 2016年01月 ...</div>
+                    <div class="table-view-cap">松江</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="1001279115" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1001279115.html" target="_blank" class="ad-title">奥迪A6 2009款 A6L 2.4 无...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">6.28万元</span></div>
+                    <div class="table-view-block">奥迪 2009年08月 ...</div>
+                    <div class="table-view-cap">普陀</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="1001067262" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1001067262.html" target="_blank" class="ad-title">陆风X7 2015款 2.0T 手自一体...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">4.6万元</span></div>
+                    <div class="table-view-block">陆风 2015年12月 ...</div>
+                    <div class="table-view-cap">松江</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="990255053" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a990255053.html" target="_blank" class="ad-title">奥迪A6 2009款 A6L 2.0TF...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-2"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">5万元</span></div>
+                    <div class="table-view-block">奥迪 2009年06月 ...</div>
+                    <div class="table-view-cap">嘉定</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="974890258" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/xiaxianche/a974890258.html" target="_blank" class="ad-title">上海浦发二手车销售服务有限公司上海直销</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/xiaxianche/" target="_blank" class="tag tag-category">本地下线车</a></div>
+                    <div class="table-view-cap"><span class="highlight">0.85万元</span></div>
+                    <div class="table-view-block">大众 </div>
+                    <div class="table-view-cap">宝山</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="1027201960" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1027201960.html" target="_blank" class="ad-title">起亚K2 2012款 K2-三厢 1.6...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">2.58万元</span></div>
+                    <div class="table-view-block">起亚 2012年05月 ...</div>
+                    <div class="table-view-cap">普陀</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="1020642859" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershoukache/a1020642859.html" target="_blank" class="ad-title">12年五菱</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershoukache/" target="_blank" class="tag tag-category">面包车/客车</a></div>
+                    <div class="table-view-cap"><span class="highlight">1.3万元</span></div>
+                    <div class="table-view-block">五菱 2012年 5万公里 </div>
+                    <div class="table-view-cap">闵行</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="1012672756" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershougongchengche/a1012672756.html" target="_blank" class="ad-title">专业收售各类二手货车 高价 诚信交易</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershougongchengche/" target="_blank" class="tag tag-category">二手货车</a></div>
+                    <div class="table-view-cap"><span class="highlight">10万元</span></div>
+                    <div class="table-view-block">平板车 江铃 </div>
+                    <div class="table-view-cap">嘉定</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="1001075996" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1001075996.html" target="_blank" class="ad-title">哈弗H6 2014款 2.4 手自一体 ...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">4.5万元</span></div>
+                    <div class="table-view-block">哈弗 2014年06月 ...</div>
+                    <div class="table-view-cap">松江</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="983871642" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/cheliangqiugou/a983871642.html" target="_blank" class="ad-title">高价收车、免费评估、热线电话136366...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/cheliangqiugou/" target="_blank" class="tag tag-category">高价收车</a></div>
+                    <div class="table-view-cap"><span class="highlight">　</span></div>
+                    <div class="table-view-block">　</div>
+                    <div class="table-view-cap">徐汇</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="973223086" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a973223086.html" target="_blank" class="ad-title">奇瑞 东方之子 2009款 1.8 手动...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">3.1万元</span></div>
+                    <div class="table-view-block">奇瑞 2009年07月 ...</div>
+                    <div class="table-view-cap">普陀</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="1001806145" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1001806145.html" target="_blank" class="ad-title">大众 朗逸 2011款 1.4TSI 双...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">5.68万元</span></div>
+                    <div class="table-view-block">大众 2011年10月 ...</div>
+                    <div class="table-view-cap">浦东新区</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="1001805524" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1001805524.html" target="_blank" class="ad-title">马自达6 2011款 2.0 手自一体 ...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">5.16万元</span></div>
+                    <div class="table-view-block">马自达 2011年10月...</div>
+                    <div class="table-view-cap">浦东新区</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="1023208712" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1023208712.html" target="_blank" class="ad-title">丰田 雷凌 2014款 1.6 手动 E...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">3.28万元</span></div>
+                    <div class="table-view-block">丰田 2015年05月 ...</div>
+                    <div class="table-view-cap">　</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="1001316569" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1001316569.html" target="_blank" class="ad-title">宝马3系 2006款 320i 2.0 ...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">3.6万元</span></div>
+                    <div class="table-view-block">宝马 2006年10月 ...</div>
+                    <div class="table-view-cap">青浦</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="999009471" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a999009471.html" target="_blank" class="ad-title">大众 迈腾 2013款 1.8TSI 双...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">4.8万元</span></div>
+                    <div class="table-view-block">大众 2013年12月 ...</div>
+                    <div class="table-view-cap">普陀</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="1006995704" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1006995704.html" target="_blank" class="ad-title">陆风X7 2015款 2.0T 手自一体...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">4.7万元</span></div>
+                    <div class="table-view-block">陆风 2015年08月 ...</div>
+                    <div class="table-view-cap">卢湾</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="1029108474" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershougongchengche/a1029108474.html" target="_blank" class="ad-title">欧马可6.8米栏板车上路14.5万首付4...</a><a href="http://shanghai.baixing.com/ershougongchengche/" target="_blank" class="tag tag-category">二手货车</a></div>
+                    <div class="table-view-cap"><span class="highlight">5万元</span></div>
+                    <div class="table-view-block">平板车 福田 </div>
+                    <div class="table-view-cap">浦东新区</div>
+                    <div class="table-view-cap">今天 15:03</div>
+                </li>
+                <li data-aid="1004404915" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1004404915.html" target="_blank" class="ad-title">标致308 2015款 308S 1.6...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">2.98万元</span></div>
+                    <div class="table-view-block">标致 2015年08月 ...</div>
+                    <div class="table-view-cap">浦东新区</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="1029108268" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouzixingche/a1029108268.html" target="_blank" class="ad-title">品牌自行车批发零售价140元起 可送货二...</a><a href="http://shanghai.baixing.com/ershouzixingche/" target="_blank" class="tag tag-category">二手自行车</a></div>
+                    <div class="table-view-cap"><span class="highlight">140元</span></div>
+                    <div class="table-view-block">普通自行车 永久 </div>
+                    <div class="table-view-cap">浦东新区</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="1027445577" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1027445577.html" target="_blank" class="ad-title">大众 途安 2008款 1.8T 手自一...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-2"></a>
+                        <a data-toggle="tooltip" data-placement="top" data-original-title="认证车商" class="tag tag-verify"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">5.98万元</span></div>
+                    <div class="table-view-block">大众 2008年11月 ...</div>
+                    <div class="table-view-cap">闵行</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="990967595" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a990967595.html" target="_blank" class="ad-title">起亚K5 2014款 2.0 手自一体 ...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">3.6万元</span></div>
+                    <div class="table-view-block">起亚 2014年08月 ...</div>
+                    <div class="table-view-cap">普陀</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="1029108263" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/shangpaiyanche/a1029108263.html" target="_blank" class="ad-title">专业开苏州牌照委托书，苏E上海验车委托书...</a><a href="http://shanghai.baixing.com/shangpaiyanche/" target="_blank" class="tag tag-category">过户/验车</a></div>
+                    <div class="table-view-cap"><span class="highlight">年检验车</span></div>
+                    <div class="table-view-block">　</div>
+                    <div class="table-view-cap">闸北</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="1028355937" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1028355937.html" target="_blank" class="ad-title">大众POLO 2011款 1.6 手自一...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-2"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">3.3万元</span></div>
+                    <div class="table-view-block">大众 2011年04月 ...</div>
+                    <div class="table-view-cap">嘉定</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="989829972" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a989829972.html" target="_blank" class="ad-title">大众 迈腾 2012款 1.8TSI 双...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">2.18万元</span></div>
+                    <div class="table-view-block">大众 2012年08月 ...</div>
+                    <div class="table-view-cap">普陀</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="923911202" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a923911202.html" target="_blank" class="ad-title">起亚K5 2011款 2.0 手自一体 ...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-2"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">5.2万元</span></div>
+                    <div class="table-view-block">起亚 2011年10月 ...</div>
+                    <div class="table-view-cap">普陀</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="986247375" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a986247375.html" target="_blank" class="ad-title">大众 帕萨特 2013款 1.8TSI ...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">6.33万元</span></div>
+                    <div class="table-view-block">大众 2013年12月 ...</div>
+                    <div class="table-view-cap">普陀</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="999924650" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a999924650.html" target="_blank" class="ad-title">现代Rohens [劳恩斯](进口) 2...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">5万元</span></div>
+                    <div class="table-view-block">现代 2012年05月 ...</div>
+                    <div class="table-view-cap">闵行</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="1027377208" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1027377208.html" target="_blank" class="ad-title">现代 伊兰特 2012款 伊兰特 朗动 ...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">3.6万元</span></div>
+                    <div class="table-view-block">现代 2012年02月 ...</div>
+                    <div class="table-view-cap">嘉定</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="1027088655" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/cheliangqiugou/a1027088655.html" target="_blank" class="ad-title">上海高价收车，免费评估，18721678...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/cheliangqiugou/" target="_blank" class="tag tag-category">高价收车</a></div>
+                    <div class="table-view-cap"><span class="highlight">　</span></div>
+                    <div class="table-view-block">　</div>
+                    <div class="table-view-cap">闸北</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="1028686343" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/gongchengche/a1028686343.html" target="_blank" class="ad-title">出售精品30|50二手装载机。龙工临工柳...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/gongchengche/" target="_blank" class="tag tag-category">二手工程车</a></div>
+                    <div class="table-view-cap"><span class="highlight">11.8万元</span></div>
+                    <div class="table-view-block">装载机 柳工 </div>
+                    <div class="table-view-cap">青浦</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="992012070" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a992012070.html" target="_blank" class="ad-title">帝豪EC7 2012款 EC7-RV 1...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-2"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">0.9万元</span></div>
+                    <div class="table-view-block">帝豪 2012年10月 ...</div>
+                    <div class="table-view-cap">普陀</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="1025103360" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1025103360.html" target="_blank" class="ad-title">雪佛兰Avalanche [雪崩](进口...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a>
+                        <a data-toggle="tooltip" data-placement="top" data-original-title="认证车商" class="tag tag-verify"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">23.8万元</span></div>
+                    <div class="table-view-block">雪佛兰 2008年10月...</div>
+                    <div class="table-view-cap">闸北</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="1017923465" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1017923465.html" target="_blank" class="ad-title">现代 索纳塔 2013款 第八代索纳塔 ...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">3.18万元</span></div>
+                    <div class="table-view-block">现代 2013年04月 ...</div>
+                    <div class="table-view-cap">普陀</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="1011146293" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1011146293.html" target="_blank" class="ad-title">丰田 卡罗拉 2013款 1.6 自动 ...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-2"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">2.55万元</span></div>
+                    <div class="table-view-block">丰田 2013年06月 ...</div>
+                    <div class="table-view-cap">闵行</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="1000589493" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/cheliangqiugou/a1000589493.html" target="_blank" class="ad-title">专业收购 查封 吊销 注销车131222...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/cheliangqiugou/" target="_blank" class="tag tag-category">高价收车</a></div>
+                    <div class="table-view-cap"><span class="highlight">　</span></div>
+                    <div class="table-view-block">　</div>
+                    <div class="table-view-cap">闵行</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="989379333" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/xiaxianche/a989379333.html" target="_blank" class="ad-title">收购：报废车、单位车 可上门回收</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/xiaxianche/" target="_blank" class="tag tag-category">本地下线车</a></div>
+                    <div class="table-view-cap"><span class="highlight">1万元</span></div>
+                    <div class="table-view-block">其他 </div>
+                    <div class="table-view-cap">浦东新区</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="1011246397" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1011246397.html" target="_blank" class="ad-title">大众 朗逸 2013款 1.6 手自一体...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">1.68万元</span></div>
+                    <div class="table-view-block">大众 2013年05月 ...</div>
+                    <div class="table-view-cap">普陀</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="1010982807" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1010982807.html" target="_blank" class="ad-title">雪佛兰 科鲁兹 2012款 1.6 手动...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">2.1万元</span></div>
+                    <div class="table-view-block">雪佛兰 2012年06月...</div>
+                    <div class="table-view-cap">松江</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="1004257429" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1004257429.html" target="_blank" class="ad-title">雪佛兰 景程 2011款 1.8 手自一...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">2.08万元</span></div>
+                    <div class="table-view-block">雪佛兰 2011年06月...</div>
+                    <div class="table-view-cap">普陀</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="819464430" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a819464430.html" target="_blank" class="ad-title">09年 大众 帕萨特 新领驭1.8T  ...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">8.88万元</span></div>
+                    <div class="table-view-block">大众 2009年09月 ...</div>
+                    <div class="table-view-cap">宝山</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="1025440560" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1025440560.html" target="_blank" class="ad-title">大众 桑塔纳 2013款 1.4 手动 ...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">2万元</span></div>
+                    <div class="table-view-block">大众 2013年02月 ...</div>
+                    <div class="table-view-cap">普陀</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="1023541683" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1023541683.html" target="_blank" class="ad-title">雪佛兰 景程 2013款 1.8 手自一...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">1.88万元</span></div>
+                    <div class="table-view-block">雪佛兰 2013年07月...</div>
+                    <div class="table-view-cap">松江</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="1012225907" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1012225907.html" target="_blank" class="ad-title">起亚K2 2012款 K2-两厢 1.6...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">2.18万元</span></div>
+                    <div class="table-view-block">起亚 2012年11月 ...</div>
+                    <div class="table-view-cap">青浦</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="977002466" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a977002466.html" target="_blank" class="ad-title">现代 索纳塔 2013款 第八代索纳塔 ...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-2"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">2.5万元</span></div>
+                    <div class="table-view-block">现代 2013年06月 ...</div>
+                    <div class="table-view-cap">普陀</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="1020042043" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1020042043.html" target="_blank" class="ad-title">丰田 皇冠 2010款 2.5 手自一体...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">6万元</span></div>
+                    <div class="table-view-block">丰田 2010年07月 ...</div>
+                    <div class="table-view-cap">闵行</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="964458874" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a964458874.html" target="_blank" class="ad-title">宝马3 Series [3系](进口) ...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">20.8万元</span></div>
+                    <div class="table-view-block">宝马 2010年03月 ...</div>
+                    <div class="table-view-cap">嘉定</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="839362800" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a839362800.html" target="_blank" class="ad-title">09年凯越精品车况特价等着你来取回家</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-2"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">4.5万元</span></div>
+                    <div class="table-view-block">别克 2009年09月 ...</div>
+                    <div class="table-view-cap">嘉定</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="265253452" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/xiaxianche/a265253452.html" target="_blank" class="ad-title">上海大众出租车强生公司，志俊，普桑全国批发</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/xiaxianche/" target="_blank" class="tag tag-category">本地下线车</a></div>
+                    <div class="table-view-cap"><span class="highlight">0.75万元</span></div>
+                    <div class="table-view-block">大众 </div>
+                    <div class="table-view-cap">普陀</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="1013910471" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1013910471.html" target="_blank" class="ad-title">五菱 宏光 2014款 宏光S 1.5 ...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">2.8万元</span></div>
+                    <div class="table-view-block">五菱 2014年12月 ...</div>
+                    <div class="table-view-cap">普陀</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="1023835214" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1023835214.html" target="_blank" class="ad-title">帝豪EC7 2010款 EC7-RV 1...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">1.5万元</span></div>
+                    <div class="table-view-block">帝豪 2010年10月 ...</div>
+                    <div class="table-view-cap">松江</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="971440830" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a971440830.html" target="_blank" class="ad-title">本田 奥德赛 2006款 2.4 手自一...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a>
+                        <a data-toggle="tooltip" data-placement="top" data-original-title="认证车商" class="tag tag-verify"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">5.18万元</span></div>
+                    <div class="table-view-block">本田 2006年10月 ...</div>
+                    <div class="table-view-cap">普陀</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="860161663" data-cpm-sign="" data-inorganic="1" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/shangpaiyanche/a860161663.html" target="_blank" class="ad-title">上海专业代上外牌、价格最优、速度最快</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/shangpaiyanche/" target="_blank" class="tag tag-category">过户/验车</a></div>
+                    <div class="table-view-cap"><span class="highlight">其他</span></div>
+                    <div class="table-view-block">　</div>
+                    <div class="table-view-cap">宝山</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="741220061" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershougongchengche/a741220061.html" target="_blank" class="ad-title">上海辰澜建筑工程有限公司重型自卸车出售</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-2"></a><a href="http://shanghai.baixing.com/ershougongchengche/" target="_blank" class="tag tag-category">二手货车</a></div>
+                    <div class="table-view-cap"><span class="highlight">25万元</span></div>
+                    <div class="table-view-block">自卸车 豪沃 </div>
+                    <div class="table-view-cap">浦东新区</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="1025965894" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1025965894.html" target="_blank" class="ad-title">丰田 卡罗拉 2011款 1.6 自动 ...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">1.8万元</span></div>
+                    <div class="table-view-block">丰田 2011年08月 ...</div>
+                    <div class="table-view-cap">上海周边</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="1001836793" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1001836793.html" target="_blank" class="ad-title">别克 君越 2007款 3.0 手自一体...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-2"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">4.88万元</span></div>
+                    <div class="table-view-block">别克 2007年04月 ...</div>
+                    <div class="table-view-cap">普陀</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="982479202" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/gongchengche/a982479202.html" target="_blank" class="ad-title">二手22吨26吨压路机徐工振动二手压路机</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/gongchengche/" target="_blank" class="tag tag-category">二手工程车</a></div>
+                    <div class="table-view-cap"><span class="highlight">17万元</span></div>
+                    <div class="table-view-block">压路机 徐工 </div>
+                    <div class="table-view-cap">嘉定</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="884623035" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/cheliangqiugou/a884623035.html" target="_blank" class="ad-title">高价求购，二手依维柯，全顺，瑞风等商务车...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/cheliangqiugou/" target="_blank" class="tag tag-category">高价收车</a></div>
+                    <div class="table-view-cap"><span class="highlight">　</span></div>
+                    <div class="table-view-block">　</div>
+                    <div class="table-view-cap">浦东新区</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="1015056473" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1015056473.html" target="_blank" class="ad-title">吉利 美日 2006款 美日之星 1.3...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">1万元</span></div>
+                    <div class="table-view-block">吉利 2006年05月 ...</div>
+                    <div class="table-view-cap">闸北</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="960061871" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/gongchengche/a960061871.html" target="_blank" class="ad-title">出售二手3吨合力叉车</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/gongchengche/" target="_blank" class="tag tag-category">二手工程车</a></div>
+                    <div class="table-view-cap"><span class="highlight">1万元</span></div>
+                    <div class="table-view-block">叉车 柳工 </div>
+                    <div class="table-view-cap">上海周边</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="1012919287" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1012919287.html" target="_blank" class="ad-title">丰田 凯美瑞 2013款 凯美瑞经典 2...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">3.88万元</span></div>
+                    <div class="table-view-block">丰田 2013年06月 ...</div>
+                    <div class="table-view-cap">松江</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="1027383675" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1027383675.html" target="_blank" class="ad-title">沃尔沃S40 2007款 2.4i 手自...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">3.2万元</span></div>
+                    <div class="table-view-block">沃尔沃 2007年07月...</div>
+                    <div class="table-view-cap">松江</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="1027118279" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1027118279.html" target="_blank" class="ad-title">本田 奥德赛 2006款 2.4 自动 ...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">2.6万元</span></div>
+                    <div class="table-view-block">本田 2006年12月 ...</div>
+                    <div class="table-view-cap">闵行</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="1002183384" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1002183384.html" target="_blank" class="ad-title">起亚K3 2012款 1.6 手动 GL</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">3万元</span></div>
+                    <div class="table-view-block">起亚 2012年09月 ...</div>
+                    <div class="table-view-cap">闸北</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="983090672" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a983090672.html" target="_blank" class="ad-title">现代 索纳塔 2011款 第八代索纳塔 ...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">6.8万元</span></div>
+                    <div class="table-view-block">现代 2011年12月 ...</div>
+                    <div class="table-view-cap">嘉定</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="970076098" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a970076098.html" target="_blank" class="ad-title">起亚K5 2014款 2.0 手自一体 ...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">5.85万元</span></div>
+                    <div class="table-view-block">起亚 2014年06月 ...</div>
+                    <div class="table-view-cap">嘉定</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="1001245559" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1001245559.html" target="_blank" class="ad-title">现代 名图 2014款 1.8 手自一体...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">3.59万元</span></div>
+                    <div class="table-view-block">现代 2014年09月 ...</div>
+                    <div class="table-view-cap">青浦</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="985429210" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a985429210.html" target="_blank" class="ad-title">起亚K3 2014款 K3S 1.6 手...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">3.4万元</span></div>
+                    <div class="table-view-block">起亚 2014年08月 ...</div>
+                    <div class="table-view-cap">普陀</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="879736961" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/daikuangouche/a879736961.html" target="_blank" class="ad-title">东南DX7，现车充足，首付0首付都可以</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-2"></a><a href="http://shanghai.baixing.com/daikuangouche/" target="_blank" class="tag tag-category">贷款购车</a></div>
+                    <div class="table-view-cap"><span class="highlight">9万元</span></div>
+                    <div class="table-view-block">东南 DX7 </div>
+                    <div class="table-view-cap">奉贤</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="1023828689" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1023828689.html" target="_blank" class="ad-title">长城 哈弗H6 2015款 1.5T 手...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">2.18万元</span></div>
+                    <div class="table-view-block">长城 2015年06月 ...</div>
+                    <div class="table-view-cap">青浦</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="1020038937" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1020038937.html" target="_blank" class="ad-title">起亚K5 2014款 2.0 手自一体 GL</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">3.88万元</span></div>
+                    <div class="table-view-block">起亚 2014年07月 ...</div>
+                    <div class="table-view-cap">闵行</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="1003492506" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1003492506.html" target="_blank" class="ad-title">陆风X7 2015款 2.0T 手自一体...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">4.2万元</span></div>
+                    <div class="table-view-block">陆风 2015年09月 ...</div>
+                    <div class="table-view-cap">松江</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="984057363" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a984057363.html" target="_blank" class="ad-title">2012年现代朗动，包过户，质保一年</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">1万元</span></div>
+                    <div class="table-view-block">其他 2012年6月 4...</div>
+                    <div class="table-view-cap">普陀</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="1013279897" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1013279897.html" target="_blank" class="ad-title">现代 名图 2014款 1.8 手自一体...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">3.6万元</span></div>
+                    <div class="table-view-block">现代 2014年04月 ...</div>
+                    <div class="table-view-cap">闵行</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="1011013923" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1011013923.html" target="_blank" class="ad-title">大众 朗逸 2013款 1.6 手自一体...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">4.58万元</span></div>
+                    <div class="table-view-block">大众 2014年05月 ...</div>
+                    <div class="table-view-cap">普陀</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="998451482" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a998451482.html" target="_blank" class="ad-title">现代 名驭 2009款 1.8 手动 G...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">2.2万元</span></div>
+                    <div class="table-view-block">现代 2010年12月 ...</div>
+                    <div class="table-view-cap">普陀</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="1012544323" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1012544323.html" target="_blank" class="ad-title">哈弗H6 2015款 1.5T 手自一体...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">2.4万元</span></div>
+                    <div class="table-view-block">哈弗 2015年11月 ...</div>
+                    <div class="table-view-cap">松江</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="1001751468" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1001751468.html" target="_blank" class="ad-title">奥迪A6 2011款 A6L 2.0TF...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">6.68万元</span></div>
+                    <div class="table-view-block">奥迪 2011年02月 ...</div>
+                    <div class="table-view-cap">长宁</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="866324123" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a866324123.html" target="_blank" class="ad-title">低价出售13年科鲁兹，国四排放 ，极品车...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">1.88万元</span></div>
+                    <div class="table-view-block">雪佛兰 2013年09月...</div>
+                    <div class="table-view-cap">普陀</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="990228537" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a990228537.html" target="_blank" class="ad-title">雪佛兰 科鲁兹 2010款 1.6 手动...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">2.38万元</span></div>
+                    <div class="table-view-block">雪佛兰 2011年05月...</div>
+                    <div class="table-view-cap">浦东新区</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="989740355" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a989740355.html" target="_blank" class="ad-title">现代 索纳塔 2013款 第八代索纳塔 ...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">3.7万元</span></div>
+                    <div class="table-view-block">现代 2013年09月 ...</div>
+                    <div class="table-view-cap">普陀</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="976991222" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a976991222.html" target="_blank" class="ad-title">标致307 2007款 307-三厢 2...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">3.2万元</span></div>
+                    <div class="table-view-block">标致 2008年10月 ...</div>
+                    <div class="table-view-cap">普陀</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="973247505" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a973247505.html" target="_blank" class="ad-title">大众 桑塔纳 2008款 桑塔纳 志俊 ...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">3.8万元</span></div>
+                    <div class="table-view-block">大众 2011年10月 ...</div>
+                    <div class="table-view-cap">普陀</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="985509848" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/xincheyouhui/a985509848.html" target="_blank" class="ad-title">起亚全系【首付低1.5万】开回家！身份证...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/xincheyouhui/" target="_blank" class="tag tag-category">新车优惠</a></div>
+                    <div class="table-view-cap"><span class="highlight">8.88万元</span></div>
+                    <div class="table-view-block">起亚 </div>
+                    <div class="table-view-cap">浦东新区</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="1024777920" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1024777920.html" target="_blank" class="ad-title">本田 奥德赛 2008款 2.4 自动 ...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">3.2万元</span></div>
+                    <div class="table-view-block">本田 2008年10月 ...</div>
+                    <div class="table-view-cap">普陀</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="1024880320" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1024880320.html" target="_blank" class="ad-title">美女急卖  大众朗逸 13款 豪华版  ...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">3.58万元</span></div>
+                    <div class="table-view-block">其他 2013年05月 ...</div>
+                    <div class="table-view-cap">普陀</div>
+                    <div class="table-view-cap">今天 15:02</div>
+                </li>
+                <li data-aid="1028428248" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1028428248.html" target="_blank" class="ad-title">大众 帕萨特 2011款 1.8TSI ...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">2.2万元</span></div>
+                    <div class="table-view-block">大众 2011年05月 ...</div>
+                    <div class="table-view-cap">青浦</div>
+                    <div class="table-view-cap">今天 15:01</div>
+                </li>
+                <li data-aid="1027932200" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1027932200.html" target="_blank" class="ad-title">长城C50 2012款 1.5T 手动 ...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">2.1万元</span></div>
+                    <div class="table-view-block">长城 2012年02月 ...</div>
+                    <div class="table-view-cap">嘉定</div>
+                    <div class="table-view-cap">今天 15:01</div>
+                </li>
+                <li data-aid="1020431229" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1020431229.html" target="_blank" class="ad-title">现代 索纳塔 2015款 第九代索纳塔 ...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">3.18万元</span></div>
+                    <div class="table-view-block">现代 2015年03月 ...</div>
+                    <div class="table-view-cap">普陀</div>
+                    <div class="table-view-cap">今天 15:01</div>
+                </li>
+                <li data-aid="1011652606" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1011652606.html" target="_blank" class="ad-title">2011款大众帕萨特 精品急售 欢迎试驾看车</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">3.18万元</span></div>
+                    <div class="table-view-block">其他 2011年04月 ...</div>
+                    <div class="table-view-cap">松江</div>
+                    <div class="table-view-cap">今天 15:01</div>
+                </li>
+                <li data-aid="1007271388" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1007271388.html" target="_blank" class="ad-title">雪佛兰 科鲁兹 2010款 1.6 手动...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">2.8万元</span></div>
+                    <div class="table-view-block">雪佛兰 2010年09月...</div>
+                    <div class="table-view-cap">奉贤</div>
+                    <div class="table-view-cap">今天 15:01</div>
+                </li>
+                <li data-aid="992295241" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a992295241.html" target="_blank" class="ad-title">起亚 赛拉图 2012款 1.8 手动 ...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">4.25万元</span></div>
+                    <div class="table-view-block">起亚 2012年11月 ...</div>
+                    <div class="table-view-cap">松江</div>
+                    <div class="table-view-cap">今天 15:01</div>
+                </li>
+                <li data-aid="1020017185" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1020017185.html" target="_blank" class="ad-title">雪佛兰 科鲁兹 2013款 1.6 手自...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">1.68万元</span></div>
+                    <div class="table-view-block">雪佛兰 2013年04月...</div>
+                    <div class="table-view-cap">青浦</div>
+                    <div class="table-view-cap">今天 15:01</div>
+                </li>
+                <li data-aid="1017908894" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1017908894.html" target="_blank" class="ad-title">别克 凯越 2011款 1.6 自动 LE</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">2.38万元</span></div>
+                    <div class="table-view-block">别克 2011年06月 ...</div>
+                    <div class="table-view-cap">青浦</div>
+                    <div class="table-view-cap">今天 15:01</div>
+                </li>
+                <li data-aid="1011680935" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1011680935.html" target="_blank" class="ad-title">丰田 凯美瑞 2012款 2.0 自动 ...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">2.18万元</span></div>
+                    <div class="table-view-block">丰田 2012年05月 ...</div>
+                    <div class="table-view-cap">普陀</div>
+                    <div class="table-view-cap">今天 15:01</div>
+                </li>
+                <li data-aid="1011662998" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1011662998.html" target="_blank" class="ad-title">2012款大众迈腾 全国包提档过户 看车...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">2.88万元</span></div>
+                    <div class="table-view-block">其他 2012年05月 ...</div>
+                    <div class="table-view-cap">松江</div>
+                    <div class="table-view-cap">今天 15:01</div>
+                </li>
+                <li data-aid="979836193" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a979836193.html" target="_blank" class="ad-title">奔驰SLK-Class [SLK级](进...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">23.6万元</span></div>
+                    <div class="table-view-block">奔驰 2010年04月 ...</div>
+                    <div class="table-view-cap">闸北</div>
+                    <div class="table-view-cap">今天 15:01</div>
+                </li>
+                <li data-aid="1004557995" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershouqiche/a1004557995.html" target="_blank" class="ad-title">现代 索纳塔 2014款 第八代索纳塔 ...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershouqiche/" target="_blank" class="tag tag-category">二手车轿车</a></div>
+                    <div class="table-view-cap"><span class="highlight">4.2万元</span></div>
+                    <div class="table-view-block">现代 2014年09月 ...</div>
+                    <div class="table-view-cap">闸北</div>
+                    <div class="table-view-cap">今天 15:01</div>
+                </li>
+                <li data-aid="1027348631" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/ershougongchengche/a1027348631.html" target="_blank" class="ad-title">红岩后八轮自卸车底价出售</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/ershougongchengche/" target="_blank" class="tag tag-category">二手货车</a></div>
+                    <div class="table-view-cap"><span class="highlight">18万元</span></div>
+                    <div class="table-view-block">自卸车 红岩 </div>
+                    <div class="table-view-cap">南汇</div>
+                    <div class="table-view-cap">今天 15:01</div>
+                </li>
+                <li data-aid="941763626" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/cheliangqiugou/a941763626.html" target="_blank" class="ad-title">高价回收各种 报废车 老爷车 黄标车</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/cheliangqiugou/" target="_blank" class="tag tag-category">高价收车</a></div>
+                    <div class="table-view-cap"><span class="highlight">　</span></div>
+                    <div class="table-view-block">　</div>
+                    <div class="table-view-cap">闵行</div>
+                    <div class="table-view-cap">今天 15:01</div>
+                </li>
+                <li data-aid="824024398" data-cpm-sign="" data-inorganic="0" class="ad table-view-item clearfix  item-regular">
+                    <div class="table-view-body"><a href="http://shanghai.baixing.com/cheliangqiugou/a824024398.html" target="_blank" class="ad-title">高中低档轿车面包车高价收18621608...</a>
+                        <a href="http://vip.baixing.com/auto_buy" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="车商VIP用户" class="tag tag-vip tag-vip-1"></a><a href="http://shanghai.baixing.com/cheliangqiugou/" target="_blank" class="tag tag-category">高价收车</a></div>
+                    <div class="table-view-cap"><span class="highlight">　</span></div>
+                    <div class="table-view-block">　</div>
+                    <div class="table-view-cap">浦东新区</div>
+                    <div class="table-view-cap">今天 15:01</div>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="./viewability.js"></script>
+    <script src="./main.js"></script>
+</body>
+
+</html>
