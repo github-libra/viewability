@@ -6,21 +6,21 @@
     var serviceCollectionCache = {};
     var serviceType = [
         // 优蓝信息
-        { 'serviceNum': 1002, name: '优蓝信息' ,'selector': '.youlan-tag' },
+        { 'serviceNum': 1002, name: '优蓝信息', 'selector': '.youlan-tag' },
         // 唯我独尊
-        { 'serviceNum': 82, name: '唯我独尊' ,'selector': '.tag-vipding' },
+        { 'serviceNum': 82, name: '唯我独尊', 'selector': '.tag-vipding' },
         // 至尊展位
-        { 'serviceNum': 33, name: '至尊展位' ,'selector': '.tag-ace' },
+        { 'serviceNum': 33, name: '至尊展位', 'selector': '.tag-ace' },
         // 推荐展位
-        { 'serviceNum': 81, name: '推荐展位' ,'selector': '.tag-rec' },
+        { 'serviceNum': 81, name: '推荐展位', 'selector': '.tag-rec' },
         // 十万火急
-        { 'serviceNum': 28, name: '十万火急' ,'selector': '.tag-huoji' },
+        { 'serviceNum': 28, name: '十万火急', 'selector': '.tag-huoji' },
         // 置顶
-        { 'serviceNum': 5, name: '置顶' ,'selector': '.tag-ding' },
+        { 'serviceNum': 5, name: '置顶', 'selector': '.tag-ding' },
         // VIP主推（VIP主推的选择器逻辑要单独处理）
-        { 'serviceNum': 1001, name: 'IP主推' ,'selector': '.tag-vip' },
+        { 'serviceNum': 1001, name: 'IP主推', 'selector': '.tag-vip' },
         // none
-        {'serviceNum': 0, name: '普通' ,'selector': 'div'}
+        { 'serviceNum': 0, name: '普通', 'selector': 'div' }
     ];
 
     if ($body.hasClass('view-item')) {
@@ -28,17 +28,17 @@
     } else if ($body.hasClass('view-table')) {
         viewType = 'table';
     } else {
-    	viewType = null;
+        viewType = null;
     }
 
     function getServiceName(serviceId) {
-    	var name = "";
-    	for (var i = serviceType.length - 1; i >= 0; i--) {
-    		if(serviceType[i]['serviceNum'] === serviceId) {
-    			name = serviceType[i]['name'];
-    		}
-    	}
-    	return name;
+        var name = "";
+        for (var i = serviceType.length - 1; i >= 0; i--) {
+            if (serviceType[i]['serviceNum'] === serviceId) {
+                name = serviceType[i]['name'];
+            }
+        }
+        return name;
     }
 
 
@@ -71,8 +71,8 @@
                     payType = serviceNum;
                     rank = $ele.index(containerSelector + " li[data-aid]");
 
-                    if(serviceNum === 0) {
-                    	break;
+                    if (serviceNum === 0) {
+                        break;
                     }
 
                     if (!serviceCollectionCache[serviceNum]) {
@@ -115,7 +115,7 @@
             'p_type_id': payType, // 付费服务的类型
             'rank': rank, // 处于listing页面的第几个位置（waterfall页面计算不出此项）
             'p_rank': payRank, // 处于listing页面此付费服务第几个位置（waterfall页面计算不出此项）
-            'time': + new Date()
+            'time': +new Date()
                 // 'user_id': '', // poster发布帖子上对应的user_id（此项在后端用aid拿到）
                 // 'track_id': '',
                 // 'listing_visit_id': '', // 用户的访问的唯一id（此项在后端生成）
